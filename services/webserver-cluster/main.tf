@@ -6,7 +6,7 @@ terraform {
     region = "us-east-1"
     dynamodb_table = "terraform-state-lock"
     profile = "personal"
-    shared_credentials_file = "/Users/Alexm/.aws/credentials"
+    shared_credentials_file = "~/.aws/credentials"
   }
 }
 
@@ -93,18 +93,18 @@ data "aws_availability_zones" "all" {}
 data "terraform_remote_state" "db" {
   backend = "s3"
 
-  config{
+  config = {
       bucket = "${var.db_remote_state_bucket}"
       key = "${var.db_remote_state_key}"
       region = "us-east-1"
       profile = "personal"
-      shared_credentials_file = "/Users/Alexm/.aws/credentials"
+      shared_credentials_file = "~/.aws/credentials"
   }
 }
 data "template_file" "user_data" {
     template = "${file("${path.module}/user-data.sh")}"
 
-    vars {
+    vars = {
         server_port = "${var.server_port}"
         db_address  = "${data.terraform_remote_state.db.address}"
         db_port     = "${data.terraform_remote_state.db.port}"
