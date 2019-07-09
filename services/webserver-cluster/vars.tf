@@ -3,7 +3,7 @@ variable "server_port" {
   default     = 8080
 }
 
-variable "web_image_id" {
+variable "image_id" {
   description = "Image ID for web servers"
   default     = "ami-07b4156579ea1d7ba"
 }
